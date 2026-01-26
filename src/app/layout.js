@@ -1,6 +1,8 @@
 import { IBM_Plex_Serif } from "next/font/google";
 import "../styles/globals.css";
-// import Footer from "./footer";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeContext";
 
 const ibmPlexSerif = IBM_Plex_Serif({ subsets: ["latin"], weight: '400' });
 
@@ -20,11 +22,13 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
       <body className={ibmPlexSerif.className}>
-        {/* <Nav /> */}
-        <div id="app">
-          {children}
-        </div>
-          {/* <Footer /> */}
+        <ThemeProvider>
+          <Nav />
+          <div id="app">
+            {children}
+          </div>
+          <Footer />
+        </ThemeProvider>
       </body>
 
       
