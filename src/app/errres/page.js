@@ -1,3 +1,45 @@
-export default function Errres(){
-    return <h1>THIS IS ERRRES!</h1>
+import { readdir } from 'fs/promises';
+import path from 'path';
+import Image from 'next/image';
+
+export default async function Errres(){
+
+    const imagesDir = path.join(process.cwd(), 'public', 'images');
+    const imagePaths = [];
+
+    // Leer archivos en errres subdirectorios
+    const errresSubdirs = [
+        {dir: '001', text: 'Tank top', price: '60€'},
+        {dir: '002', text: 'T-shirt', price: '70€'},
+        {dir: '003', text: 'Dress', price: '90€'},
+        {dir: '004', text: 'Dress', price: '90€'},
+        {dir: '005', text: 'Skirt', price: '90€'},
+        {dir: '006', text: 'Sweater', price: '90€'},
+    ];
+    for (const sub of errresSubdirs) {
+        try {
+            const files = await readdir(path.join(imagesDir, 'errres', sub.dir));
+            imagePaths.push({
+                src: '/images/errres/' + sub.dir + '/' + files[0],
+                secondSrc: files[1] ? '/images/errres/' + sub.dir + '/' + files[1] : null, 
+                info: sub
+            });
+        } catch (e) {}
+    }
+
+    return (
+        <>
+            <div className="grid grid-cols-3 w-2/4 mx-auto justify-items-center items-end gap-4 mt-15">
+                {imagePaths.map((item, index) => (
+                    <div key={index} className="relative group text-center">
+                        <Image src={item.src} alt={`Foto ${index + 1}`} width={350} height={350} className="group-hover:opacity-0 transition-opacity" />
+                        {item.secondSrc && (
+                            <Image src={item.secondSrc} alt={`Foto ${index + 1} hover`} width={350} height={350} className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
+                        <span className='text-xs'>{item.info.dir} {item.info.text} - {item.info.price}</span>
+                    </div>
+                ))}
+            </div>
+        </>
+    )
 }

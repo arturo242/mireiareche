@@ -17,8 +17,8 @@ export default function Nav() {
   }, [pathname, setTextColor]);
 
   return (
-    <nav className={`nav mt-4 relative z-1 ${textColor}`}>
-      <div className="nav-container px-[250px]">
+    <nav className={`nav mt-4 relative z-1 text-xs ${textColor}`}>
+      <div className="nav-container px-[200px]">
         <ul className="nav-menu flex justify-between">
           <li>
             <Link href="/">MIREIA</Link>
