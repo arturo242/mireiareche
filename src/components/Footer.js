@@ -6,7 +6,7 @@ export default function Footer() {
   const { textColor } = useTheme();
 
     return (
-        <footer className={`footer absolute bottom-8 mt-4 z-1 text-xs w-full ${textColor}`}>
+        <footer className={`footer mt-auto py-8 z-1 text-xs w-full ${textColor}`}>
           <div className="flex justify-between px-[200px]">
               <div className="w-1/3">
                 <ul className="flex justify-between">

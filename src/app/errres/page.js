@@ -1,6 +1,7 @@
 import { readdir } from 'fs/promises';
 import path from 'path';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default async function Errres(){
 
@@ -29,15 +30,19 @@ export default async function Errres(){
 
     return (
         <>
-            <div className="grid grid-cols-3 w-2/4 mx-auto justify-items-center items-end gap-4 mt-15">
+            <div className="grid grid-cols-3 w-1/2 mx-auto justify-items-center items-end gap-4 mt-15">
                 {imagePaths.map((item, index) => (
-                    <div key={index} className="relative group text-center">
-                        <Image src={item.src} alt={`Foto ${index + 1}`} width={350} height={350} className="group-hover:opacity-0 transition-opacity" />
-                        {item.secondSrc && (
-                            <Image src={item.secondSrc} alt={`Foto ${index + 1} hover`} width={350} height={350} className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        )}
-                        <span className='text-xs'>{item.info.dir} {item.info.text} - {item.info.price}</span>
-                    </div>
+                    <Link key={index} href={`/errres/${item.info.dir}`}>
+                        <div className="relative group text-center flex flex-col gap-2 cursor-pointer">
+                            <div className="w-[450px] h-[300px] relative">
+                                <Image src={item.src} alt={`Foto ${index + 1}`} fill objectFit='contain' className="relative group-hover:opacity-0 transition-opacity" />
+                                {item.secondSrc && (
+                                    <Image src={item.secondSrc} alt={`Foto ${index + 1} hover`} fill objectFit='contain' className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                )}
+                            </div>
+                            <span className='text-xs hover:underline'>{item.info.dir} {item.info.text} - {item.info.price}</span>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </>
