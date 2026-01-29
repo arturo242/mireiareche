@@ -5,7 +5,8 @@
   --foreground: #171717;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -16,13 +17,18 @@ body {
   flex-direction: column;
 }
 
-#__next {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Projects background */
+.projects-bg {
+  background-image: url('/images/projects/pc.png');
+  background-attachment: scroll;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top 20px center;
+  
 }
 
-#app {
-  flex: 1;
-  position: relative;
+@media (max-width: 768px) {
+  .projects-bg {
+    background-image: url('/images/projects/mobile.png');
+  }
 }

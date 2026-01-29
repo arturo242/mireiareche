@@ -58,8 +58,8 @@ export default function ProductDetail({ params: paramsPromise }) {
 
     return (
         <>
-            <div className="w-full h-screen flex items-center justify-center">
-                <div className="flex w-full h-full absolute top-0 transition">
+            <div className="w-full h-[600px] relative">
+                <div className="flex w-full h-full absolute -top-8">
                     {/* Grid de 3 imágenes */}
                     <div className="flex w-full h-full">
                         {images.slice(currentIndex, currentIndex + 3).map((image, index) => (
@@ -80,13 +80,13 @@ export default function ProductDetail({ params: paramsPromise }) {
                         <>
                             {
                                 currentIndex !== 0 && (
-                                <button
-                                onClick={prevSlide}
-                                className="absolute cursor-pointer left-25 top-1/2 transform -translate-y-1/2 -translate-x-12 bg-black/50 hover:bg-black/75 disabled:bg-gray-400 disabled:cursor-not-allowed text-white p-2 rounded-full transition-colors"
-                                aria-label="Anterior"
-                            >
-                                ←
-                            </button>)
+                                    <button
+                                        onClick={prevSlide}
+                                        className="absolute cursor-pointer left-25 top-1/2 transform -translate-y-1/2 -translate-x-12 bg-black/50 hover:bg-black/75 disabled:bg-gray-400 disabled:cursor-not-allowed text-white p-2 rounded-full transition-colors"
+                                        aria-label="Anterior"
+                                    >
+                                        ←
+                                    </button>)
                             }
                             {
                                 currentIndex !== images.length - 3 && (
@@ -116,6 +116,14 @@ export default function ProductDetail({ params: paramsPromise }) {
                         ))}
                     </div>
                 </div>
+            </div>
+            <div className='text-[14px] w-3/4 mx-auto mt-10'>
+                <p>{product.id} {product.text}. Wool 100% - {product.price}</p>
+                <p className='mt-4'>We work sustainably by making items to order. Choose your favorite pieze, size, and color and we´ll create it for you.<br />
+                    All this products are made by hand with 100% cotton.
+
+                </p>
+                <p className='mt-4'><Link href="mailto:errres.info@gmail.com">errres.info@gmail.com</Link></p>
             </div>
         </>
     );
