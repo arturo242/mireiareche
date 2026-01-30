@@ -11,13 +11,13 @@ export default function Footer() {
               <div className="w-1/3">
                 <ul className="flex justify-between">
                   <li>
-                    <Link href="/">contact</Link>
+                    <Link href="/about">contact</Link>
                   </li>
                   <li>
-                    <Link href="/errres">social</Link>
+                    <Link target="_blank" href="https://www.instagram.com/mireiareche/">social</Link>
                   </li>
                   <li>
-                    <Link href="/projects">wax</Link>
+                    <Link target="_blank" href="https://waxdepartamento.com/">wax</Link>
                   </li>
                 </ul>
               </div>

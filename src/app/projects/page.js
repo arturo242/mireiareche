@@ -2,6 +2,7 @@ import { readdir } from 'fs/promises';
 import path from 'path';
 import Image from 'next/image';
 import Link from 'next/link';
+import ProjectsGridClient from './ProjectsGridClient';
 
 export default async function Projects() {
 
@@ -10,19 +11,19 @@ export default async function Projects() {
 
   // Leer archivos en projects subdirectorios
   const projectsSubdir = [
-    { dir: '01', height: 212, width: 300 },
-    { dir: '02', height: 212, width: 300 },
-    { dir: '03', height: 212, width: 300 },
-    { dir: '04', height: 212, width: 300 },
-    { dir: '05', height: 212, width: 300 },
-    { dir: '06', height: 212, width: 300 },
-    { dir: '07', height: 212, width: 300 },
-    { dir: '08', height: 212, width: 300 },
-    { dir: '09', height: 212, width: 300 },
-    { dir: '10', height: 212, width: 300 },
-    { dir: '11', height: 212, width: 300 },
-    { dir: '12', height: 212, width: 300 },
-    { dir: '13', height: 212, width: 300 },
+    { dir: '01', height: 212, width: 282, position: {top: -32, left: -205} },
+    { dir: '02', height: 225, width: 300, position: {top: -32, left: 400}  },
+    { dir: '03', height: 173, width: 233, position: {top: -150, right: 400}  },
+    { dir: '04', height: 217, width: 310, position: {top: -118, left: 160}  },
+    { dir: '05', height: 286, width: 380, position: {top: -200, right: 200}  },
+    { dir: '06', height: 185, width: 247, position: {top: -140, left: 230}  },
+    { dir: '07', height: 261, width: 348, position: {top: -111, left: -165}  },
+    { dir: '08', height: 229, width: 305, position: {top: -90, left: 350}  },
+    { dir: '09', height: 232, width: 293, position: {top: -100, right: 300}  },
+    { dir: '10', height: 225, width: 282, position: {top: -100, left: 100}  },
+    { dir: '11', height: 225, width: 278, position: {top: -100, right: 200}  },
+    { dir: '12', height: 229, width: 305, position: {top: -140, left: 260}  },
+    { dir: '13', height: 199, width: 263, position: {top: -50, right: 100}  },
   ];
   for (const sub of projectsSubdir) {
     try {
@@ -35,23 +36,5 @@ export default async function Projects() {
     } catch (e) { }
   }
 
-  return (
-    <>
-      <div className="projects-bg flex flex-col items-center justify-center pt-20 pb-20 mb-20">
-        <div className="flex flex-col items-center justify-center gap-[280px]">
-          {projectsSubdir.map((element, index) => (
-            <div key={index}>
-              <Link href={`/projects/${element.dir}`}>
-                <span className='text-[15px] hover:underline relative'>{element.dir}</span>
-              </Link>
-                {/* <Link className={`absolute inset-0 w-[${element.width}px] h-[${element.height}px]`} href={`/projects/${element.dir}`}>
-                  <Image className={``} src={imagePaths[index]?.src} alt={element.dir} fill/>
-                </Link> */}
-            </div>
-
-          ))}
-        </div>
-      </div>
-    </>
-  )
+  return <ProjectsGridClient imagePaths={imagePaths} projects={projectsSubdir} />;
 }

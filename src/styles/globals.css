@@ -21,10 +21,10 @@ body {
 .projects-bg {
   background-image: url('/images/projects/pc.png');
   background-attachment: scroll;
-  background-size: contain;
   background-repeat: no-repeat;
   background-position: top 20px center;
-  
+  width: 1262px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
