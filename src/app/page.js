@@ -12,7 +12,7 @@ export default function Home() {
       ['/images/home/1.jpg', 'light'],
       ['/images/home/2.jpg', 'dark'],
       ['/images/home/3.jpg', 'light'],
-      ['/images/home/4.png', 'light'],
+      ['/images/home/4.png', 'dark'],
       ['/images/home/5.jpg', 'light'],
     ];
 
@@ -35,7 +35,7 @@ export default function Home() {
         alt="Home Image"
         fill
         objectFit="cover"
-        objectPosition="center"
+        objectPosition="100% 100%"
         onClick={nextImage}
       />
       <div id="homeText" className={`absolute top-1/2 transform -translate-y-1/2 left-[15%] ${textColor}`}>

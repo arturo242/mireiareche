@@ -10,9 +10,12 @@ export default function ProjectsGridClient({ imagePaths = [], projects = [] }) {
         if (hovered) {
             document.body.style.backgroundImage = `url(${hovered})`;
             document.body.style.backgroundSize = 'cover';
-            document.body.style.backgroundPosition = 'center center';
+            document.body.style.backgroundPosition = '100% 100%';
             document.body.style.backgroundAttachment = 'fixed';
         } else {
+            document.body.style.backgroundImage = 'none';
+        }
+        return () => {
             document.body.style.backgroundImage = 'none';
         }
     }, [hovered]);
