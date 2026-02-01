@@ -32,9 +32,9 @@ export default async function Errres(){
         <>
             <div className="grid grid-cols-3 w-1/2 mx-auto justify-items-center items-end gap-4 mt-15">
                 {imagePaths.map((item, index) => (
-                    <Link key={index} href={`/errres/${item.info.dir}`}>
+                    <Link className='w-full' key={index} href={`/errres/${item.info.dir}`}>
                         <div className="relative group text-center flex flex-col gap-2 cursor-pointer">
-                            <div className="w-[450px] h-[300px] relative">
+                            <div className="h-[300px] relative">
                                 <Image src={item.src} alt={`Foto ${index + 1}`} fill objectFit='contain' className="relative group-hover:opacity-0 transition-opacity" />
                                 {item.secondSrc && (
                                     <Image src={item.secondSrc} alt={`Foto ${index + 1} hover`} fill objectFit='contain' className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
