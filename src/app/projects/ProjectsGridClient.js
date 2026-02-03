@@ -3,9 +3,21 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ProjectsGridClient({ imagePaths = [], projects = [] }) {
+export default function ProjectsGridClient({ imagePaths = [], projects = []}) {
     const [hovered, setHovered] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) setIsMobile(true);
+            else setIsMobile(false);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     useEffect(() => {
         if (hovered) {
             document.body.style.backgroundImage = `url(${hovered})`;
@@ -20,9 +32,9 @@ export default function ProjectsGridClient({ imagePaths = [], projects = [] }) {
         }
     }, [hovered]);
     return (
-        <div className="">
+        <div className="w-full overflow-x-hidden">
             <div className="projects-bg flex flex-col items-center justify-center pt-[12px] pb-[150px] relative">
-                <div className="flex flex-col items-center justify-center mt-[40px] gap-[265px]">
+                <div className="flex flex-col items-center justify-center mt-[40px] gap-[27vw] md:gap-[265px]">
                     {projects.map((element, index) => {
                         const img = imagePaths[index];
                         return (
@@ -35,12 +47,12 @@ export default function ProjectsGridClient({ imagePaths = [], projects = [] }) {
                                 <Link
                                     className={`absolute z-2`}
                                     style={{
-                                        width: element.width,
-                                        height: element.height,
-                                        top: element.position?.top,
-                                        left: element.position?.left,
-                                        right: element.position?.right,
-                                        bottom: element.position?.bottom,
+                                        width: isMobile ? element.width * element.sizeMobile : element.width,
+                                        height: isMobile ? element.height * element.sizeMobile : element.height,
+                                        top: isMobile ? element.positionMobile?.top : element.position?.top,
+                                        left: isMobile ? element.positionMobile?.left : element.position?.left,
+                                        right: isMobile ? element.positionMobile?.right : element.position?.right,
+                                        bottom: isMobile ? element.positionMobile?.bottom : element.position?.bottom,
                                     }}
                                     href={`/projects/${element.dir}`}
                                 >

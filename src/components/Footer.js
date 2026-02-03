@@ -6,9 +6,9 @@ export default function Footer() {
   const { textColor } = useTheme();
 
     return (
-        <footer className={`footer mt-auto py-8 z-1 text-xs w-full ${textColor}`}>
-          <div className="flex justify-between px-[200px]">
-              <div className="w-1/3">
+        <footer className={`footer mt-auto py-8 z-1 text-sm md:text-xs w-full ${textColor}`}>
+          <div className="flex justify-between px-8 md:px-[200px]">
+              <div className="w-1/2 md:w-1/3">
                 <ul className="flex justify-between">
                   <li>
                     <Link href="/about">contact</Link>
@@ -21,8 +21,8 @@ export default function Footer() {
                   </li>
                 </ul>
               </div>
-              <div className="w-2/3">
-                <p className="text-center">© 2023 ERRRES</p>
+              <div className="w-1/2 md:w-2/3">
+                <p className="text-end md:text-center">© 2023 ERRRES</p>
               </div>
           </div>
         </footer>

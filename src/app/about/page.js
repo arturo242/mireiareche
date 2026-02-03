@@ -4,7 +4,7 @@ export default function About() {
     return (
         <>
             <div className='flex flex-col md:flex-row justify-center text-[14px] mt-10'>
-                <div className="p-10 md:p-40 md:pb-10 flex-1">
+                <div className="p-10 md:px-40 flex-1">
                     <p className="indent-[40px]">Mireia Reche is a Spain-based stylist and creative professional working out of Madrid. She works as a stylist and art director, and leads her personal project, ERRRES, where she explores the connections between textiles, art, and identity. Deeply rooted in the textile world, her practice spans everything from garment creation to concept development and the final shaping of a product. For her, fashion is a language—one that gives form to ideas, emotions, and identity.</p>
 
                     <p className="mt-4">Throughout her career, she has worked across diverse contexts, from tailoring and handcrafted processes to e-commerce and visual projects for streetwear brands. This range of experience has given her a broad understanding of the industry and allows her to approach each project with both creativity and a strong practical sense. As a stylist, she focuses on aligning garments with the essence of a person or brand, building visual narratives that feel honest, thoughtful, and meaningful.</p>
@@ -15,7 +15,7 @@ export default function About() {
 
                     <p className="mt-4">With a background that blends design, sustainability, creative direction, and styling, Mireia works with intuition, curiosity, and close attention to detail. She sees every project as an opportunity to connect ideas, materials, and people transforming small inspirations into clear, strong concepts.</p>
                 </div>
-                <div className="flex-1 pt-40 pr-4">
+                <div className="flex-1 p-10 md:pt-10 md:p-0 pr-4">
                     <p>Education</p>
                     <div className="flex mt-6">
                         <span className="w-28 flex-none text-left">2024 - 2025</span>

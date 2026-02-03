@@ -6,14 +6,15 @@ import { useTheme } from '../components/ThemeContext';
 export default function Home() {
   const { textColor, setTextColor } = useTheme();
   const [imageSrc, setImageSrc] = useState('/images/home/1.jpg');
+  const [object, setObject] = useState({objectFit: 'cover', objectPosition: '100% 100%'});
 
   const nextImage = () => {
     const images = [
-      ['/images/home/1.jpg', 'light'],
-      ['/images/home/2.jpg', 'dark'],
-      ['/images/home/3.jpg', 'light'],
-      ['/images/home/4.png', 'dark'],
-      ['/images/home/5.jpg', 'light'],
+      ['/images/home/1.jpg', 'light', {objectFit: 'cover', objectPosition: '100% 100%'}],
+      ['/images/home/2.jpg', 'dark', {objectFit: 'cover', objectPosition: ''}],
+      ['/images/home/3.jpg', 'light', {objectFit: 'cover', objectPosition: '100% 100%'}],
+      ['/images/home/04.png', 'dark', {objectFit: 'cover', objectPosition: '50% 50%'}],
+      ['/images/home/5.jpg', 'light', {objectFit: 'cover', objectPosition: '50%'}],
     ];
 
     const currentIndex = images.findIndex(image => image[0] === imageSrc);
@@ -25,6 +26,7 @@ export default function Home() {
       setTextColor('text-black');
     }
     setImageSrc(images[nextIndex][0]);
+    setObject(images[nextIndex][2]);
   }
 
   return (
@@ -34,8 +36,8 @@ export default function Home() {
         src={imageSrc}
         alt="Home Image"
         fill
-        objectFit="cover"
-        objectPosition="100% 100%"
+        objectFit={object.objectFit}
+        objectPosition={object?.objectPosition}
         onClick={nextImage}
       />
       <div id="homeText" className={`absolute top-1/2 transform -translate-y-1/2 left-[15%] ${textColor}`}>

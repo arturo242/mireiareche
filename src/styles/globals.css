@@ -30,5 +30,8 @@ body {
 @media (max-width: 768px) {
   .projects-bg {
     background-image: url('/images/projects/mobile.png');
+    background-size: 100vw;
+  background-position: top 50px center;
+    width: 100%;
   }
 }

@@ -18,6 +18,23 @@ export default function ProductDetail({ params: paramsPromise }) {
     const [images, setImages] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [imagesShown, setImagesShown] = useState(window.innerWidth < 768 ? 1 : 3);
+
+    //si la pantalla es menor a 768px, mostrar solo 1 imagen en el slider
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setImagesShown(1);
+            } else {
+                setImagesShown(3);
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const product = products.find(p => p.id === params.id);
 
@@ -37,7 +54,7 @@ export default function ProductDetail({ params: paramsPromise }) {
     }, [params.id]);
 
     const nextSlide = () => {
-        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, images.length - 3));
+        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, images.length - imagesShown));
     };
 
     const prevSlide = () => {
@@ -62,7 +79,7 @@ export default function ProductDetail({ params: paramsPromise }) {
                 <div className="flex w-full h-full absolute -top-8">
                     {/* Grid de 3 imágenes */}
                     <div className="flex w-full h-full">
-                        {images.slice(currentIndex, currentIndex + 3).map((image, index) => (
+                        {images.slice(currentIndex, currentIndex + imagesShown).map((image, index) => (
                             <div key={currentIndex + index} className="relative flex-1 h-full overflow-hidden">
                                 <Image
                                     src={image}
@@ -76,7 +93,7 @@ export default function ProductDetail({ params: paramsPromise }) {
                     </div>
 
                     {/* Controles del slider */}
-                    {images.length > 3 && (
+                    {images.length > imagesShown && (
                         <>
                             {
                                 currentIndex !== 0 && (
@@ -89,7 +106,7 @@ export default function ProductDetail({ params: paramsPromise }) {
                                     </button>)
                             }
                             {
-                                currentIndex !== images.length - 3 && (
+                                currentIndex !== images.length - imagesShown && (
                                     <button
                                         onClick={nextSlide}
                                         className="absolute cursor-pointer right-25 top-1/2 transform -translate-y-1/2 translate-x-12 bg-black/50 hover:bg-black/75 disabled:bg-gray-400 disabled:cursor-not-allowed text-white p-2 rounded-full transition-colors"
@@ -105,11 +122,11 @@ export default function ProductDetail({ params: paramsPromise }) {
 
                     {/* Indicadores */}
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                        {Array.from({ length: images.length - 2 }).map((_, index) => (
+                        {Array.from({ length: Math.ceil(images.length / imagesShown) }).map((_, index) => (
                             <button
                                 key={index}
-                                onClick={() => setCurrentIndex(index)}
-                                className={`h-2 rounded-full transition-all ${index === currentIndex ? 'bg-white w-8' : 'bg-white/50 w-2'
+                                onClick={() => setCurrentIndex(index * imagesShown)}
+                                className={`h-2 rounded-full transition-all ${index === Math.floor(currentIndex / imagesShown) ? 'bg-white w-8' : 'bg-white/50 w-2'
                                     }`}
                                 aria-label={`Ir a grupo ${index + 1}`}
                             />

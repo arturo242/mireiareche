@@ -56,14 +56,14 @@ export default function ProjectDetail({ params: paramsPromise }) {
     }
     return (
         <>
-            <div className="flex flex-col items-center mt-10">
+            <div className="flex flex-col items-center mt-10 md:p-0 p-4">
                 <Image
                     src={images[0]}
                     alt="portada"
                     width={860}
                     height={2000}
                 />
-                <div className='text-[14px] self-start ml-50 mt-10'>
+                <div className='text-[14px] self-start md:ml-50 mt-10'>
                     <p><i>{project.title}</i></p>
                     <p className='mt-4'>{project.text}</p>
                     <p><i>{project.date}</i></p>

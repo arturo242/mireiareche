@@ -30,14 +30,14 @@ export default async function Errres(){
 
     return (
         <>
-            <div className="grid grid-cols-3 w-1/2 mx-auto justify-items-center items-end gap-4 mt-15">
+            <div className="grid grid-cols-2 md:grid-cols-3 w-full px-8 md:px-0 md:w-1/2 mx-auto justify-items-center items-end gap-8 md:gap-4 mt-15">
                 {imagePaths.map((item, index) => (
                     <Link className='w-full' key={index} href={`/errres/${item.info.dir}`}>
                         <div className="relative group text-center flex flex-col gap-2 cursor-pointer">
-                            <div className="h-[300px] relative">
-                                <Image src={item.src} alt={`Foto ${index + 1}`} fill objectFit='contain' className="relative group-hover:opacity-0 transition-opacity" />
+                            <div className="h-[180px] md:h-[300px] relative">
+                                <Image src={item.src} alt={`Foto ${index + 1}`} fill objectFit='cover' className="relative group-hover:opacity-0 transition-opacity" />
                                 {item.secondSrc && (
-                                    <Image src={item.secondSrc} alt={`Foto ${index + 1} hover`} fill objectFit='contain' className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <Image src={item.secondSrc} alt={`Foto ${index + 1} hover`} fill objectFit='cover' className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity" />
                                 )}
                             </div>
                             <span className='text-xs hover:underline'>{item.info.dir} {item.info.text} - {item.info.price}</span>
