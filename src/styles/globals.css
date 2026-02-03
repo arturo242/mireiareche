@@ -17,6 +17,13 @@ body {
   flex-direction: column;
 }
 
+.home-bg {
+  position: fixed;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-color: #000; /* por si hay bordes */
+}
+
 /* Projects background */
 .projects-bg {
   background-image: url('/images/projects/pc.png');
@@ -33,5 +40,21 @@ body {
     background-size: 100vw;
   background-position: top 50px center;
     width: 100%;
+  }
+
+  .home-bg {
+    /* Al rotar, el ancho/alto se intercambian */
+    width: 100vh;
+    height: 100vw;
+
+    top: 50%;
+    left: 50%;
+
+    /* Centrado + rotación */
+    transform: translate(-50%, -50%) rotate(var(--mobile-rotate, 90deg));
+    transform-origin: center;
+
+    /* IMPORTANTE: sigue usando tu position/size */
+    background-repeat: no-repeat;
   }
 }
