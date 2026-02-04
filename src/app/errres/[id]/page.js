@@ -107,14 +107,14 @@ export default function ProductDetail({ params: paramsPromise }) {
                     onMouseMove={handleMouseMove}
                     
                     className={`
-                        w-full h-[600px] overflow-x-auto flex custom-scrollbar no-select
+                        w-full h-auto overflow-x-auto flex custom-scrollbar no-select
                         ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'}
                     `}
                 >
                     {images.map((image, index) => (
                         <div
                             key={index}
-                            className="relative flex-shrink-0 w-full md:w-1/3 h-full snap-start"
+                            className="relative flex-shrink-0 w-full md:w-1/3 aspect-[3/4] md:aspect-[4/5] max-h-[85vh] snap-start"
                         >
                             <Image
                                 src={image}
@@ -122,7 +122,7 @@ export default function ProductDetail({ params: paramsPromise }) {
                                 fill
                                 sizes="(max-width: 768px) 100vw, 33vw"
                                 style={{ objectFit: "cover" }}
-                                className="pointer-events-none" // IMPORTANTE: Evita que el navegador intente arrastrar la imagen como archivo
+                                className="pointer-events-none"
                                 priority={index < 3}
                             />
                         </div>
