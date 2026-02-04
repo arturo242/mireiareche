@@ -57,35 +57,53 @@ export default function ProjectDetail({ params: paramsPromise }) {
     return (
         <>
             <div className="flex flex-col items-center mt-10 md:p-0 p-4">
-                <Image
-                    src={images[0]}
-                    alt="portada"
-                    width={860}
-                    height={2000}
-                />
-                <div className='text-[14px] self-start md:ml-50 mt-10'>
+                {/* Contenedor de Imagen de Portada */}
+                <div className="w-full max-w-[860px]">
+                    <Image
+                        src={images[0]}
+                        alt="portada"
+                        width={860}
+                        height={2000}
+                        className="w-full h-auto" // Width total, alto automático según imagen
+                        priority
+                    />
+                </div>
+
+                {/* Texto alineado con el ancho de la imagen */}
+                <div className='text-[14px] self-start md:ml-50 mt-10 w-full max-w-[860px] mx-auto'>
                     <p><i>{project.title}</i></p>
                     <p className='mt-4'>{project.text}</p>
                     <p><i>{project.date}</i></p>
                 </div>
 
-                <div className='mt-20'>
+                <div className='mt-20 w-full max-w-[860px]'>
                     {project.youtubeVideo && (
                         <div className="mb-10 w-full">
-                            <iframe
-                                src={project.youtubeVideo}
-                                title={project.title}
-                                allowFullScreen
-                            />
+                            {/* Contenedor del Video:
+                       - Mismo width que las fotos (w-full dentro de max-w-860).
+                       - aspect-video ajusta el alto automáticamente para que el video se vea bien (16:9).
+                    */}
+                            <div className="w-full aspect-video bg-black">
+                                <iframe
+                                    className="w-full h-full"
+                                    src={project.youtubeVideo}
+                                    title={project.title}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            </div>
                         </div>
                     )}
+
+                    {/* Resto de imágenes */}
                     {images.slice(1).map((src, index) => (
-                        <div key={index} className="mb-10">
+                        <div key={index} className="mb-10 w-full">
                             <Image
                                 src={src}
                                 alt={`image-${index}`}
                                 width={860}
                                 height={2000}
+                                className="w-full h-auto"
                             />
                         </div>
                     ))}
