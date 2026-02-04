@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -16,25 +16,13 @@ const products = [
 export default function ProductDetail({ params: paramsPromise }) {
     const params = use(paramsPromise);
     const [images, setImages] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [imagesShown, setImagesShown] = useState(window.innerWidth < 768 ? 1 : 3);
 
-    //si la pantalla es menor a 768px, mostrar solo 1 imagen en el slider
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 768) {
-                setImagesShown(1);
-            } else {
-                setImagesShown(3);
-            }
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    // Estados y Referencias para el Drag
+    const sliderRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
 
     const product = products.find(p => p.id === params.id);
 
@@ -53,94 +41,106 @@ export default function ProductDetail({ params: paramsPromise }) {
         loadImages();
     }, [params.id]);
 
-    const nextSlide = () => {
-        setCurrentIndex((prevIndex) => Math.min(prevIndex + 1, images.length - imagesShown));
+    // --- LÓGICA DE ARRASTRE (DRAG) ---
+
+    const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.pageX - sliderRef.current.offsetLeft);
+        setScrollLeft(sliderRef.current.scrollLeft);
     };
 
-    const prevSlide = () => {
-        setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+    const handleMouseLeave = () => {
+        setIsDragging(false);
     };
 
-    if (!product) {
-        return <div className="flex justify-center items-center h-screen">Producto no encontrado</div>;
-    }
+    const handleMouseUp = () => {
+        setIsDragging(false);
+    };
 
-    if (loading) {
-        return <div className="flex justify-center items-center h-screen">Cargando...</div>;
-    }
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - sliderRef.current.offsetLeft;
+        const walk = (x - startX) * 2; // El * 2 es la velocidad del arrastre
+        sliderRef.current.scrollLeft = scrollLeft - walk;
+    };
 
-    if (images.length === 0) {
-        return <div className="flex justify-center items-center h-screen">No hay imágenes disponibles</div>;
-    }
+    // ----------------------------------
+
+    if (!product) return <div className="flex justify-center items-center h-screen">Producto no encontrado</div>;
+    if (loading) return <div className="flex justify-center items-center h-screen">Cargando...</div>;
+    if (images.length === 0) return <div className="flex justify-center items-center h-screen">No hay imágenes disponibles</div>;
 
     return (
         <>
-            <div className="w-full h-[600px] relative">
-                <div className="flex w-full h-full absolute -top-8">
-                    {/* Grid de 3 imágenes */}
-                    <div className="flex w-full h-full">
-                        {images.slice(currentIndex, currentIndex + imagesShown).map((image, index) => (
-                            <div key={currentIndex + index} className="relative flex-1 h-full overflow-hidden">
-                                <Image
-                                    src={image}
-                                    alt={`${product.text} ${currentIndex + index + 1}`}
-                                    fill
-                                    objectFit="cover"
-                                    className="transition-opacity duration-300"
-                                />
-                            </div>
-                        ))}
-                    </div>
+            <style jsx global>{`
+                .custom-scrollbar::-webkit-scrollbar {
+                    height: 6px;
+                    background: transparent;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 0px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: #000;
+                    border-radius: 0px;
+                    cursor: pointer;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: #333;
+                }
+                /* Ocultar selección de texto al arrastrar */
+                .no-select {
+                    user-select: none;
+                    -webkit-user-select: none;
+                }
+            `}</style>
 
-                    {/* Controles del slider */}
-                    {images.length > imagesShown && (
-                        <>
-                            {
-                                currentIndex !== 0 && (
-                                    <button
-                                        onClick={prevSlide}
-                                        className="absolute cursor-pointer left-25 top-1/2 transform -translate-y-1/2 -translate-x-12 bg-black/50 hover:bg-black/75 disabled:bg-gray-400 disabled:cursor-not-allowed text-white p-2 rounded-full transition-colors"
-                                        aria-label="Anterior"
-                                    >
-                                        ←
-                                    </button>)
-                            }
-                            {
-                                currentIndex !== images.length - imagesShown && (
-                                    <button
-                                        onClick={nextSlide}
-                                        className="absolute cursor-pointer right-25 top-1/2 transform -translate-y-1/2 translate-x-12 bg-black/50 hover:bg-black/75 disabled:bg-gray-400 disabled:cursor-not-allowed text-white p-2 rounded-full transition-colors"
-                                        aria-label="Siguiente"
-                                    >
-                                        →
-                                    </button>
-                                )
-                            }
-
-                        </>
-                    )}
-
-                    {/* Indicadores */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                        {Array.from({ length: Math.ceil(images.length / imagesShown) }).map((_, index) => (
-                            <button
-                                key={index}
-                                onClick={() => setCurrentIndex(index * imagesShown)}
-                                className={`h-2 rounded-full transition-all ${index === Math.floor(currentIndex / imagesShown) ? 'bg-white w-8' : 'bg-white/50 w-2'
-                                    }`}
-                                aria-label={`Ir a grupo ${index + 1}`}
+            <div className="w-full relative -top-[36px]">
+                <div
+                    ref={sliderRef}
+                    // Eventos del mouse
+                    onMouseDown={handleMouseDown}
+                    onMouseLeave={handleMouseLeave}
+                    onMouseUp={handleMouseUp}
+                    onMouseMove={handleMouseMove}
+                    
+                    className={`
+                        w-full h-[600px] overflow-x-auto flex custom-scrollbar no-select
+                        ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'}
+                    `}
+                >
+                    {images.map((image, index) => (
+                        <div
+                            key={index}
+                            className="relative flex-shrink-0 w-full md:w-1/3 h-full snap-start"
+                        >
+                            <Image
+                                src={image}
+                                alt={`${product.text} ${index + 1}`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                style={{ objectFit: "cover" }}
+                                className="pointer-events-none" // IMPORTANTE: Evita que el navegador intente arrastrar la imagen como archivo
+                                priority={index < 3}
                             />
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
+
             <div className='text-[14px] w-3/4 mx-auto mt-10'>
                 <p>{product.id} {product.text}. Wool 100% - {product.price}</p>
-                <p className='mt-4'>We work sustainably by making items to order. Choose your favorite pieze, size, and color and we´ll create it for you.<br />
+                <p className='mt-4'>
+                    We work sustainably by making items to order. Choose your favorite pieze, size, and color and we´ll create it for you.<br />
                     All this products are made by hand with 100% cotton.
-
                 </p>
-                <p className='mt-4'><Link href="mailto:errres.info@gmail.com">errres.info@gmail.com</Link></p>
+                <p className='mt-4'>
+                    <Link href="mailto:errres.info@gmail.com" className="hover:underline">
+                        errres.info@gmail.com
+                    </Link>
+                </p>
             </div>
         </>
     );
