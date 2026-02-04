@@ -71,10 +71,8 @@ export default function ProjectDetail({ params: paramsPromise }) {
 
                 <div className='mt-20'>
                     {project.youtubeVideo && (
-                        <div className="mb-10">
+                        <div className="mb-10 w-full">
                             <iframe
-                                width="860"
-                                height="500"
                                 src={project.youtubeVideo}
                                 title={project.title}
                                 allowFullScreen

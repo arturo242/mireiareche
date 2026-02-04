@@ -83,7 +83,7 @@ export default function Home() {
       {/* Contenido encima */}
       <div
         id="homeText"
-        className={`absolute top-1/2 -translate-y-1/2 left-[15%] ${textColor}`}
+        className={`hidden md:block absolute top-1/2 -translate-y-1/2 left-[15%] ${textColor}`}
       >
         <p className="text-xs text-center">
           Transforming a concept into form is where art and craftsmanship truly meet,

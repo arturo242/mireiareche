@@ -4,8 +4,8 @@ export default function About() {
     return (
         <>
             <div className='flex flex-col md:flex-row justify-center text-[14px] mt-10'>
-                <div className="p-10 md:px-40 flex-1">
-                    <p className="indent-[40px]">Mireia Reche is a Spain-based stylist and creative professional working out of Madrid. She works as a stylist and art director, and leads her personal project, ERRRES, where she explores the connections between textiles, art, and identity. Deeply rooted in the textile world, her practice spans everything from garment creation to concept development and the final shaping of a product. For her, fashion is a language—one that gives form to ideas, emotions, and identity.</p>
+                <div className="p-10 md:px-40 flex-1 text-justify">
+                    <p className="indent-[40px]">Mireia Reche is a Spain-based stylist and creative professional working out of Madrid. She works as a stylist and art director, and leads her personal project, ERRRES, where she explores the connections between textiles, art, and identity. Deeply rooted in the textile world, her practice spans everything from garment creation to concept development and the final shaping of a product. For her, fashion is a language, one that gives form to ideas, emotions, and identity.</p>
 
                     <p className="mt-4">Throughout her career, she has worked across diverse contexts, from tailoring and handcrafted processes to e-commerce and visual projects for streetwear brands. This range of experience has given her a broad understanding of the industry and allows her to approach each project with both creativity and a strong practical sense. As a stylist, she focuses on aligning garments with the essence of a person or brand, building visual narratives that feel honest, thoughtful, and meaningful.</p>
 
