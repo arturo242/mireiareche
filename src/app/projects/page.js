@@ -14,7 +14,7 @@ export default async function Projects() {
     { dir: '01', height: 212, width: 282, sizeMobile: 0.6, position: { top: -32, left: -205 }, positionMobile: { top: -20, left: -175 } },
     { dir: '02', height: 225, width: 300, sizeMobile: 0.40, position: { top: -32, left: 400 }, positionMobile: { top: 0, left: 50 } },
     { dir: '03', height: 173, width: 233, sizeMobile: 0.5, position: { top: -150, right: 400 }, positionMobile: { top: -20, right: 40 } },
-    { dir: '04', height: 217, width: 310, sizeMobile: 0.5, position: { top: -118, left: 160 }, positionMobile: { top: -50, left: 30 } },
+    { dir: '04', height: 217, width: 310, sizeMobile: 0.5, position: { top: -190, left: 140 }, positionMobile: { top: -50, left: 30 } },
     { dir: '05', height: 286, width: 380, sizeMobile: 0.4, position: { top: -200, right: 200 }, positionMobile: { top: -50, right: 45 } },
     { dir: '06', height: 185, width: 247, sizeMobile: 0.7, position: { top: -140, left: 230 }, positionMobile: { top: -50, left: -80 } },
     { dir: '07', height: 261, width: 348, sizeMobile: 0.40, position: { top: -111, left: -165 }, positionMobile: { top: 0, left: -155 } },

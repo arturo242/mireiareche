@@ -1,12 +1,12 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { useTheme } from '../components/ThemeContext';
 
 export default function Home() {
   const { textColor, setTextColor } = useTheme();
 
-  // Definición de imágenes (añadimos mobileRotate: 90 o -90)
   const images = useMemo(
     () => [
       {
@@ -32,7 +32,7 @@ export default function Home() {
       },
       {
         src: '/images/home/04.png',
-        theme: 'dark',
+        theme: 'light',
         objectFit: 'cover',
         objectPosition: '50% 50%',
         mobileRotate: 90,
@@ -49,43 +49,47 @@ export default function Home() {
   );
 
   const [index, setIndex] = useState(0);
+  const current = images[index];
 
   const nextImage = () => {
     const nextIndex = (index + 1) % images.length;
     const next = images[nextIndex];
 
-    if (next.theme === 'light') setTextColor('text-stone-50');
-    else setTextColor('text-black');
-
+    setTextColor(next.theme === 'light' ? 'text-stone-50' : 'text-black');
     setIndex(nextIndex);
   };
 
-  const current = images[index];
-
   return (
     <>
-      {/* Layer de fondo (fijo, detrás de todo) */}
+      {/* Fondo */}
       <div
-        className="home-bg cursor-pointer"
+        className="fixed inset-0 cursor-pointer"
         onClick={nextImage}
         role="button"
         aria-label="Change background"
         style={{
-          // Desktop / general
-          backgroundImage: `url(${current.src})`,
-          backgroundSize: current.objectFit,
-          backgroundPosition: current.objectPosition,
-          // Variable para móvil
           ['--mobile-rotate']: `${current.mobileRotate}deg`,
         }}
-      />
+      >
+        <Image
+          src={current.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          style={{
+            objectFit: current.objectFit,
+            objectPosition: current.objectPosition,
+          }}
+        />
+      </div>
 
-      {/* Contenido encima */}
+      {/* Contenido */}
       <div
         id="homeText"
         className={`hidden md:block absolute top-1/2 -translate-y-1/2 left-[15%] ${textColor}`}
       >
-        <p className="text-xs text-center">
+        <p className="text-xs">
           Transforming a concept into form is where art and craftsmanship truly meet,
           <br />
           becoming one of their most refined expressions.

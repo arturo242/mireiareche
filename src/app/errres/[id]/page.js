@@ -130,7 +130,7 @@ export default function ProductDetail({ params: paramsPromise }) {
                 </div>
             </div>
 
-            <div className='text-[14px] w-3/4 mx-auto mt-10'>
+            <div className='text-[14px] w-3/4 mx-auto mt-10 mb-20'>
                 <p>{product.id} {product.text}. Wool 100% - {product.price}</p>
                 <p className='mt-4'>
                     We work sustainably by making items to order. Choose your favorite pieze, size, and color and we´ll create it for you.<br />

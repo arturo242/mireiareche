@@ -91,7 +91,7 @@ export default function About() {
                     </div>
                 </div>
             </div>
-            <div className="text-[14px] ml-10 md:ml-40">
+            <div className="text-[14px] ml-10 md:ml-40 mb-20">
                 <p>More about:</p>
                 <p className="mt-5">Founder of <Link className="hover:underline" target="_blank" href="https://www.instagram.com/wax.departamento">@wax.departamento</Link></p>
                 <p>Founder of <Link className="hover:underline" target="_blank" href="https://www.instagram.com/errr3s">@errr3s</Link></p>

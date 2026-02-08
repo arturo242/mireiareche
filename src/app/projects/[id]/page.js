@@ -56,7 +56,7 @@ export default function ProjectDetail({ params: paramsPromise }) {
     }
     return (
         <>
-            <div className="flex flex-col items-center mt-10 md:p-0 p-4">
+            <div className="flex flex-col items-center mt-10 md:p-0 p-4 mb-15">
                 {/* Contenedor de Imagen de Portada */}
                 <div className="w-full max-w-[860px]">
                     <Image
@@ -76,7 +76,7 @@ export default function ProjectDetail({ params: paramsPromise }) {
                     <p><i>{project.date}</i></p>
                 </div>
 
-                <div className='mt-20 w-full max-w-[860px]'>
+                <div className='mt-10 w-full max-w-[860px]'>
                     {project.youtubeVideo && (
                         <div className="mb-10 w-full">
                             {/* Contenedor del Video:
