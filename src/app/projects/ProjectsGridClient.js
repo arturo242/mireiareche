@@ -50,7 +50,7 @@ export default function ProjectsGridClient({ imagePaths = [], projects = [] }) {
       )}
 
       <div className="projects-bg flex flex-col items-center justify-center pt-[12px] pb-[150px] relative">
-        <div className="flex flex-col items-center justify-center mt-[40px] gap-[32vw] md:gap-[265px]">
+        <div className="flex flex-col items-center justify-center mt-[40px] gap-[38vw] md:gap-[265px]">
           {projects.map((element, index) => {
             const img = imagePaths[index];
 

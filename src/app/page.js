@@ -9,41 +9,11 @@ export default function Home() {
 
   const images = useMemo(
     () => [
-      {
-        src: '/images/home/1.jpg',
-        theme: 'light',
-        objectFit: 'cover',
-        objectPosition: '100% 100%',
-        mobileRotate: 90,
-      },
-      {
-        src: '/images/home/2.jpg',
-        theme: 'dark',
-        objectFit: 'cover',
-        objectPosition: '50% 50%',
-        mobileRotate: 90,
-      },
-      {
-        src: '/images/home/3.jpg',
-        theme: 'light',
-        objectFit: 'cover',
-        objectPosition: '100% 100%',
-        mobileRotate: -90,
-      },
-      {
-        src: '/images/home/04.png',
-        theme: 'light',
-        objectFit: 'cover',
-        objectPosition: '50% 50%',
-        mobileRotate: 90,
-      },
-      {
-        src: '/images/home/5.jpg',
-        theme: 'light',
-        objectFit: 'cover',
-        objectPosition: '50% 50%',
-        mobileRotate: -90,
-      },
+      { src: '/images/home/1.jpg', theme: 'light', objectFit: 'cover', objectPosition: '100% 100%', mobileRotate: 90 },
+      { src: '/images/home/2.jpg', theme: 'dark',  objectFit: 'cover', objectPosition: '50% 50%',  mobileRotate: 90 },
+      { src: '/images/home/3.jpg', theme: 'light', objectFit: 'cover', objectPosition: '100% 100%', mobileRotate: -90 },
+      { src: '/images/home/04.png', theme: 'light', objectFit: 'cover', objectPosition: '50% 50%',  mobileRotate: 90 },
+      { src: '/images/home/5.jpg', theme: 'light', objectFit: 'cover', objectPosition: '50% 50%',  mobileRotate: -90 },
     ],
     []
   );
@@ -54,7 +24,6 @@ export default function Home() {
   const nextImage = () => {
     const nextIndex = (index + 1) % images.length;
     const next = images[nextIndex];
-
     setTextColor(next.theme === 'light' ? 'text-stone-50' : 'text-black');
     setIndex(nextIndex);
   };
@@ -63,25 +32,50 @@ export default function Home() {
     <>
       {/* Fondo */}
       <div
-        className="fixed inset-0 cursor-pointer"
+        className="fixed inset-0 cursor-pointer overflow-hidden"
         onClick={nextImage}
         role="button"
         aria-label="Change background"
-        style={{
-          ['--mobile-rotate']: `${current.mobileRotate}deg`,
-        }}
       >
-        <Image
-          src={current.src}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          style={{
-            objectFit: current.objectFit,
-            objectPosition: current.objectPosition,
-          }}
-        />
+        {/* ✅ Desktop / tablet: normal */}
+        <div className="hidden md:block absolute inset-0">
+          <Image
+            src={current.src}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{
+              objectFit: current.objectFit,
+              objectPosition: current.objectPosition,
+            }}
+          />
+        </div>
+
+        {/* ✅ Mobile: lienzo con dimensiones intercambiadas + rotación */}
+        <div className="md:hidden absolute inset-0">
+          <div
+            className="absolute top-1/2 left-1/2"
+            style={{
+              width: '100vh',
+              height: '100vw',
+              transform: `translate(-50%, -50%) rotate(${current.mobileRotate}deg)`,
+              transformOrigin: 'center',
+            }}
+          >
+            <Image
+              src={current.src}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              style={{
+                objectFit: current.objectFit,
+                objectPosition: current.objectPosition,
+              }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Contenido */}
