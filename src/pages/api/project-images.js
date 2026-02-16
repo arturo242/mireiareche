@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         const files = await readdir(imagesDir);
 
         // Filtrar solo archivos de imagen
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.mov'];
         const images = files
             .filter(file => imageExtensions.includes(path.extname(file).toLowerCase()))
             .map(file => `/images/projects/${id}/${file}`)

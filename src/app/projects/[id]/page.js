@@ -2,7 +2,6 @@
 
 import { useState, useEffect, use } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const projects = [
     { id: '01', title: 'SCUFFERS-HER', text: ' Styling and ecommerce.', date: '2025' },
@@ -22,25 +21,43 @@ const projects = [
 
 export default function ProjectDetail({ params: paramsPromise }) {
     const params = use(paramsPromise);
-    const [images, setImages] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const [media, setMedia] = useState([]); // [{type:'image'|'video', src:'...'}]
     const [loading, setLoading] = useState(true);
 
-    const project = projects.find(p => p.id === params.id);
+    const project = projects.find((p) => p.id === params.id);
 
     useEffect(() => {
-        async function loadImages() {
+        async function loadMedia() {
             try {
                 const response = await fetch(`/api/project-images?id=${params.id}`);
                 const data = await response.json();
-                setImages(data.images || []);
+
+                const rawList = data.media || data.images || [];
+
+                const normalized = rawList.map((item) => {
+                    // Si ya tiene tipo (formato nuevo), lo usamos
+                    if (typeof item === 'object' && item.type) return item;
+
+                    // Si es un string o no tiene tipo, detectamos por extensión
+                    const src = typeof item === 'string' ? item : item.src;
+                    const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov'];
+                    const isVideo = videoExtensions.some(ext => src.toLowerCase().endsWith(ext));
+
+                    return {
+                        type: isVideo ? 'video' : 'image',
+                        src: src
+                    };
+                });
+
+                setMedia(normalized);
             } catch (error) {
-                console.error('Error loading images:', error);
+                console.error('Error loading media:', error);
             } finally {
                 setLoading(false);
             }
         }
-        loadImages();
+        loadMedia();
     }, [params.id]);
 
     if (!project) {
@@ -51,64 +68,90 @@ export default function ProjectDetail({ params: paramsPromise }) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
     }
 
-    if (images.length === 0) {
-        return <div className="flex justify-center items-center h-screen">No hay imágenes disponibles</div>;
+    if (media.length === 0) {
+        return <div className="flex justify-center items-center h-screen">No hay contenido disponible</div>;
     }
+
+    const cover = media[0];
+    const rest = media.slice(1);
+
     return (
-        <>
-            <div className="flex flex-col items-center mt-10 md:p-0 p-4 mb-15">
-                {/* Contenedor de Imagen de Portada */}
-                <div className="w-full max-w-[860px]">
+        <div className="flex flex-col items-center mt-10 md:p-0 p-4 mb-15">
+            {/* Portada (puede ser imagen o video) */}
+            <div className="w-full max-w-[860px]">
+                {cover.type === 'image' ? (
                     <Image
-                        src={images[0]}
+                        src={cover.src}
                         alt="portada"
                         width={860}
                         height={2000}
-                        className="w-full h-auto" // Width total, alto automático según imagen
+                        className="w-full h-auto"
                         priority
                     />
-                </div>
+                ) : (
+                    <video
+                        className="w-full h-auto"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="metadata"
+                    >
+                        <source src={cover.src} />
+                        Tu navegador no soporta vídeo.
+                    </video>
+                )}
+            </div>
 
-                {/* Texto alineado con el ancho de la imagen */}
-                <div className='text-[14px] self-start md:ml-50 mt-10 w-full max-w-[860px] mx-auto'>
-                    <p><i>{project.title}</i></p>
-                    <p className='mt-4'>{project.text}</p>
-                    <p><i>{project.date}</i></p>
-                </div>
+            {/* Texto alineado con el ancho */}
+            <div className="text-[14px] self-start md:ml-50 mt-10 w-full max-w-[860px] mx-auto">
+                <p><i>{project.title}</i></p>
+                <p className="mt-4">{project.text}</p>
+                <p><i>{project.date}</i></p>
+            </div>
 
-                <div className='mt-10 w-full max-w-[860px]'>
-                    {project.youtubeVideo && (
-                        <div className="mb-10 w-full">
-                            {/* Contenedor del Video:
-                       - Mismo width que las fotos (w-full dentro de max-w-860).
-                       - aspect-video ajusta el alto automáticamente para que el video se vea bien (16:9).
-                    */}
-                            <div className="w-full aspect-video bg-black">
-                                <iframe
-                                    className="w-full h-full"
-                                    src={project.youtubeVideo}
-                                    title={project.title}
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                />
-                            </div>
+            {/* YouTube opcional (como lo tienes ahora) */}
+            <div className="mt-10 w-full max-w-[860px]">
+                {project.youtubeVideo && (
+                    <div className="mb-10 w-full">
+                        <div className="w-full aspect-video bg-black">
+                            <iframe
+                                className="w-full h-full"
+                                src={project.youtubeVideo}
+                                title={project.title}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            />
                         </div>
-                    )}
+                    </div>
+                )}
 
-                    {/* Resto de imágenes */}
-                    {images.slice(1).map((src, index) => (
-                        <div key={index} className="mb-10 w-full">
+                {/* Resto de media (mantiene orden) */}
+                {rest.map((item, index) => (
+                    <div key={`${item.type}-${item.src}-${index}`} className="mb-10 w-full">
+                        {item.type === 'image' ? (
                             <Image
-                                src={src}
+                                src={item.src}
                                 alt={`image-${index}`}
                                 width={860}
                                 height={2000}
                                 className="w-full h-auto"
                             />
-                        </div>
-                    ))}
-                </div>
+                        ) : (
+                            <video
+                                className="w-full h-auto"
+                                autoPlay
+                                loop
+                                muted
+                                preload="metadata"
+                            >
+                                <source src={item.src} />
+                                Tu navegador no soporta vídeo.
+                            </video>
+                        )}
+                    </div>
+                ))}
             </div>
-        </>
+        </div>
     );
 }
