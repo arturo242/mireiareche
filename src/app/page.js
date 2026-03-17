@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useTheme } from '../components/ThemeContext';
 
@@ -19,7 +19,13 @@ export default function Home() {
   );
 
   const [index, setIndex] = useState(0);
-  const current = images[index];
+
+  useEffect(() => {
+    images.forEach((image) => {
+      const preloadImage = new window.Image();
+      preloadImage.src = image.src;
+    });
+  }, [images]);
 
   const nextImage = () => {
     const nextIndex = (index + 1) % images.length;
@@ -37,45 +43,58 @@ export default function Home() {
         role="button"
         aria-label="Change background"
       >
-        {/* ✅ Desktop / tablet: normal */}
-        <div className="hidden md:block absolute inset-0">
-          <Image
-            src={current.src}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{
-              objectFit: current.objectFit,
-              objectPosition: current.objectPosition,
-            }}
-          />
-        </div>
+        {images.map((image, imageIndex) => {
+          const isActive = imageIndex === index;
 
-        {/* ✅ Mobile: lienzo con dimensiones intercambiadas + rotación */}
-        <div className="md:hidden absolute inset-0">
-          <div
-            className="absolute top-1/2 left-1/2"
-            style={{
-              width: '100vh',
-              height: '100vw',
-              transform: `translate(-50%, -50%) rotate(${current.mobileRotate}deg)`,
-              transformOrigin: 'center',
-            }}
-          >
-            <Image
-              src={current.src}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              style={{
-                objectFit: current.objectFit,
-                objectPosition: current.objectPosition,
-              }}
-            />
-          </div>
-        </div>
+          return (
+            <div
+              key={image.src}
+              className={`absolute inset-0 ${
+                isActive ? 'opacity-100' : 'pointer-events-none opacity-0'
+              }`}
+            >
+              <div className="hidden md:block absolute inset-0">
+                <Image
+                  src={image.src}
+                  alt=""
+                  fill
+                  priority={imageIndex === 0}
+                  loading={imageIndex === 0 ? 'eager' : 'lazy'}
+                  sizes="100vw"
+                  style={{
+                    objectFit: image.objectFit,
+                    objectPosition: image.objectPosition,
+                  }}
+                />
+              </div>
+
+              <div className="md:hidden absolute inset-0">
+                <div
+                  className="absolute top-1/2 left-1/2"
+                  style={{
+                    width: '100vh',
+                    height: '100vw',
+                    transform: `translate(-50%, -50%) rotate(${image.mobileRotate}deg)`,
+                    transformOrigin: 'center',
+                  }}
+                >
+                  <Image
+                    src={image.src}
+                    alt=""
+                    fill
+                    priority={imageIndex === 0}
+                    loading={imageIndex === 0 ? 'eager' : 'lazy'}
+                    sizes="100vw"
+                    style={{
+                      objectFit: image.objectFit,
+                      objectPosition: image.objectPosition,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Contenido */}
