@@ -4,19 +4,20 @@ import { useState, useEffect, use } from 'react';
 import Image from 'next/image';
 
 const projects = [
-    { id: '01', title: 'SCUFFERS-HER', text: ' Styling and ecommerce.', date: '2025' },
-    { id: '02', title: 'ALTAGAMA - Rusowsky', text: 'Styling next to Adrián Guillén.', date: 'March 2025', youtubeVideo: 'https://www.youtube.com/embed/3N88XszkcMQ' },
-    { id: '03', title: 'WAX-ERRRES.', text: 'Art direction next to Irene Blanco and Felipe Huertas.', date: 'July 2025' },
-    { id: '04', title: 'ARCHIPEL FILM.', text: 'Costumes for the short film Archipel', date: 'To be released in 2026.' },
-    { id: '05', title: 'CAROLINA DURANTE', text: 'Styling next to Adrián Guillén.', date: 'November 2025' },
-    { id: '06', title: 'PUNTA CANA', text: 'Styling for Zel Hotel with Studio Brillante.', date: 'December 2024' },
-    { id: '07', title: 'KOTA IN ISHIDA', text: 'Styling and Production.', date: 'April 2024, Japan.' },
-    { id: '08', title: 'BAMBI BALI.', text: 'Styling for Bambi Bali collection FW24', date: 'April 2024' },
-    { id: '09', title: 'ERRRES', text: 'Styling and Collection.', date: 'May 2025' },
-    { id: '10', title: 'ERRRES SS25', text: 'Styling and Collection.', date: 'May 2025' },
-    { id: '11', title: 'ERRRES SS23', text: 'Styling and Art Direction.', date: 'July 2023' },
-    { id: '12', title: 'ERRRES FW24', text: 'Styling and Collection.', date: 'May 2025' },
-    { id: '13', title: 'CATALINA SARTOR', text: 'Styling and Production.', date: 'February 2023' },
+    { id: '01', title: 'NEREA', text: 'Styling for edit by Amalia Md.', date: 'July 2026' },
+    { id: '02', title: 'SCUFFERS-HER', text: ' Styling and ecommerce.', date: '2025' },
+    { id: '03', title: 'ALTAGAMA - Rusowsky', text: 'Styling next to Adrián Guillén.', date: 'March 2025', youtubeVideo: 'https://www.youtube.com/embed/3N88XszkcMQ' },
+    { id: '04', title: 'WAX-ERRRES.', text: 'Art direction next to Irene Blanco and Felipe Huertas.', date: 'July 2025' },
+    { id: '05', title: 'ARCHIPEL FILM.', text: 'Costumes for the short film Archipel', date: 'To be released in 2026.' },
+    { id: '06', title: 'CAROLINA DURANTE', text: 'Styling next to Adrián Guillén.', date: 'November 2025' },
+    { id: '07', title: 'PUNTA CANA', text: 'Styling for Zel Hotel with Studio Brillante.', date: 'December 2024' },
+    { id: '08', title: 'KOTA IN ISHIDA', text: 'Styling and Production.', date: 'April 2024, Japan.' },
+    { id: '09', title: 'BAMBI BALI.', text: 'Styling for Bambi Bali collection FW24', date: 'April 2024' },
+    { id: '10', title: 'ERRRES', text: 'Styling and Collection.', date: 'May 2025' },
+    { id: '11', title: 'ERRRES SS25', text: 'Styling and Collection.', date: 'May 2025' },
+    { id: '12', title: 'ERRRES SS23', text: 'Styling and Art Direction.', date: 'July 2023' },
+    { id: '13', title: 'ERRRES FW24', text: 'Styling and Collection.', date: 'May 2025' },
+    { id: '14', title: 'CATALINA SARTOR', text: 'Styling and Production.', date: 'February 2023' },
 ];
 
 export default function ProjectDetail({ params: paramsPromise }) {

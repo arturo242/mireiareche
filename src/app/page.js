@@ -9,6 +9,7 @@ export default function Home() {
 
   const images = useMemo(
     () => [
+      { src: '/images/home/6.jpg', theme: 'light', objectFit: 'cover', objectPosition: '100% 0%', mobileRotate: 90 },
       { src: '/images/home/1.jpg', theme: 'light', objectFit: 'cover', objectPosition: '100% 100%', mobileRotate: 90 },
       { src: '/images/home/2.jpg', theme: 'dark',  objectFit: 'cover', objectPosition: '50% 50%',  mobileRotate: 90 },
       { src: '/images/home/3.jpg', theme: 'light', objectFit: 'cover', objectPosition: '100% 100%', mobileRotate: -90 },
