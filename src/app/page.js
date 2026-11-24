@@ -39,8 +39,8 @@ export default function Home() {
     <>
       {/* Fondo */}
       <div
-        className="fixed inset-0 cursor-pointer overflow-hidden"
-        onClick={nextImage}
+        className="fixed inset-0 //cursor-pointer overflow-hidden"
+        // onClick={nextImage}
         role="button"
         aria-label="Change background"
       >
